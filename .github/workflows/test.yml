@@ -1,4 +1,4 @@
-name: Run Selenium Tests
+name: Run Selenium Tests on Push
 
 on:
   push:
@@ -11,26 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'     # ✅ This line was missing in your file
 
-    - name: Set up Maven
-      uses: s4u/setup-maven-action@v1.7.0
-      with:
-        maven-version: '3.9.6'
+      - name: Set up Maven
+        run: sudo apt install -y maven
 
-    - name: Cache Maven packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-maven
-
-    - name: Run Tests with Maven
-      run: mvn clean test
+      - name: Run Tests
+        run: mvn clean test
