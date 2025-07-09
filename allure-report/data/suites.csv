@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","12549","testValidLogin","AptitudoSuite","Mon Jul 07 16:11:33 BDT 2025","passed","Mon Jul 07 16:11:46 BDT 2025","tests.LoginTest","Flow","tests.LoginTest","testValidLogin"
+"","92","tearDown","Default suite","Wed Jul 02 16:07:33 BDT 2025","broken","Wed Jul 02 16:07:33 BDT 2025","base.baseTest","Default test","base.baseTest","tearDown"
+"","5931","setUp","Default suite","Wed Jul 02 16:07:37 BDT 2025","passed","Wed Jul 02 16:07:43 BDT 2025","base.baseTest","Default test","base.baseTest","setUp"

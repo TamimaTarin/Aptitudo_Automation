@@ -1,0 +1,1 @@
+{"uuid":"ed8200a3-9005-490f-ad27-4ce251846e04","name":"AptitudoSuite","children":["f3256f20-a3f6-4c45-bfca-b8b66fcb0a2b"],"befores":[],"afters":[{"name":"generateAndOpenReport","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1751887995172,"stop":1751887995177}],"start":1751887973812,"stop":1751887995178}
