@@ -18,13 +18,18 @@ public class LoginTest extends baseTest {
     @Story("User logs in with valid credentials")
     @Severity(SeverityLevel.CRITICAL)
     public void testValidLogin() throws InterruptedException {
+	   //Reads login credentials from an Excel file
     	String username = utils.getCellData("Sheet1", 0, 0);
         String password = utils.getCellData("Sheet1", 0, 1);
+        
+        //Throws an exception if the username or password is missing, preventing test execution with invalid data.
         
         if (username == null || password == null) {
             throw new IllegalArgumentException("Test data missing for login credentials");
         }
-
+        
+        
+       //Calls a helper method to perform login with the credentials retrieved.
         performLogin(username, password);
 
         Thread.sleep(1200);  

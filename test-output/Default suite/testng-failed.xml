@@ -8,6 +8,7 @@
           <include name="selecttest"/>
           <include name="tearDown"/>
           <include name="setUp"/>
+          <include name="testCodeCardExists"/>
         </methods>
       </class> <!-- tests.AptitudoTest -->
     </classes>

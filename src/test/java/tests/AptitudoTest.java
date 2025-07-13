@@ -1,16 +1,16 @@
 package tests;
 
 import org.openqa.selenium.By;
+
 import org.testng.annotations.Test;
+
 
 import pages.MyAptitudoPage;
 import utility.utils;
 
-
-
-
 public class AptitudoTest extends LoginTest{
     By myAptitudoMenu = By.xpath("//a[normalize-space()='My APTITUDO']");
+    By selectLibrary= By.xpath("//button[normalize-space()='Select Tests From Test Library']");
 
     @Test(priority = 1)
 
@@ -31,18 +31,14 @@ public class AptitudoTest extends LoginTest{
             throw new IllegalArgumentException("Test data missing for Step1- Name Aptitudo");
         }
 
-        performstep1(nameYourAptitudo,department, jobTitle, jobTitleId);
+        MyAptitudoPage myaptitudo = new MyAptitudoPage(driver);
+        myaptitudo.nameAptitudo(nameYourAptitudo,department, jobTitle, jobTitleId);
+         Thread.sleep(3000); 
+		  System.out.println("AptitudoTest.selectTestLibrary()");
 
-        Thread.sleep(1200);
 		
 	}
-    
-    public void performstep1(String nameYourAptitudo,String department,String jobTitle,String jobTitleId) throws InterruptedException {
-       MyAptitudoPage myaptitudo = new MyAptitudoPage(driver);
-       myaptitudo.nameAptitudo(nameYourAptitudo,department, jobTitle, jobTitleId);
-        Thread.sleep(3000); 
-      
-    }
+   
     @Test(priority = 3)
     public void jobDescription() throws InterruptedException {
     	
@@ -51,41 +47,62 @@ public class AptitudoTest extends LoginTest{
     	if (description == null ) {
             throw new IllegalArgumentException("Test data missing for Step2- Job Description");
         }
-    	performstep2(description);
+    	
+    	 MyAptitudoPage jobdescription = new MyAptitudoPage(driver);
+         jobdescription.jobDescription(description);
+         Thread.sleep(3000);
+         System.out.println("tarin1111");
 
-        Thread.sleep(1200);
 	}
     
-    public void performstep2(String description) throws InterruptedException {
-        MyAptitudoPage jobdescription = new MyAptitudoPage(driver);
-        jobdescription.jobDescription(description);
-         Thread.sleep(3000); 
-       
-     }
-  @Test(priority=4)
+  @Test(priority = 4)
     
     public void selecttest() throws InterruptedException {
-    	String testType = utils.getCellData("Sheet2", 1,0);
-    	String noOfQuestion = utils.getCellData("Sheet2", 1,1);
-    	String setDuration = utils.getCellData("Sheet2", 1, 2);
-    	String industry = utils.getCellData("Sheet2",1,3);
-    	String subIndustry = utils.getCellData("Sheet2",1,4);
-    	String aptitudoTestType = utils.getCellData("Sheet2",1,5);	
-		
+	  for (int i = 1; i < 5; i++) {
+    	String testType = utils.getCellData("Sheet2", i,0);
+    	String noOfQuestion = utils.getCellData("Sheet2", i,1);
+    	String setDuration = utils.getCellData("Sheet2", i, 2);
+    	String industry = utils.getCellData("Sheet2",i,3);
+    	String subIndustry = utils.getCellData("Sheet2",i,4);
+    	String aptitudoTestType = utils.getCellData("Sheet2",i,5);	
+    	String testName= utils.getCellData("Sheet2", i, 6);
     	
-    	if (testType == null || noOfQuestion == null || setDuration == null ||industry == null || setDuration == null ||aptitudoTestType == null) {
+    	
+    	if (testType == null || noOfQuestion == null || setDuration == null ||industry == null || setDuration == null ||aptitudoTestType == null || testName==null) {
             throw new IllegalArgumentException("Test data missing for Step3- Select Test");
         }
-    	performstep3(testType, noOfQuestion, setDuration, industry, subIndustry, aptitudoTestType);
-
-        Thread.sleep(1200);
-	}
-    
-    public void performstep3(String testType, String noOfQuestion, String setDuration, String industry, String subIndustry, String aptitudoTestType) throws InterruptedException{
-    	
     	MyAptitudoPage aiSelectTest = new MyAptitudoPage(driver);
-    	aiSelectTest.selecttest(testType, noOfQuestion, setDuration, industry, subIndustry, aptitudoTestType);
-         Thread.sleep(3000); 
-		
+    	
+    	if (testType.equalsIgnoreCase("Code")) {
+            // Handle Code test: requires 2 extra fields
+            String programminglang = utils.getCellData("Sheet2", i, 7);
+            String passedTestCase = utils.getCellData("Sheet2", i, 8);
+            String executionTime= utils.getCellData("Sheet2", i, 9);
+
+            if (programminglang == null || passedTestCase == null || executionTime==null) {
+                throw new IllegalArgumentException("Code test data missing (level/language) at row " + (i + 1));
+            }
+
+            aiSelectTest.selecttestCode(testType, noOfQuestion, setDuration, industry, subIndustry, aptitudoTestType, testName, programminglang, passedTestCase,executionTime );
+
+        } else {
+            // Handle MCQ, Essay, Case Study
+            aiSelectTest.selecttest(testType, noOfQuestion, setDuration,industry, subIndustry, aptitudoTestType, testName);
+        }
+    	
+    	
+         Thread.sleep(3000);
+         
+
 	}
+  }
+
+//	public void selectTestLibrary() throws InterruptedException {
+//	  System.out.println("AptitudoTest.selectTestLibrary()");
+//		  driver.findElement(selectLibrary).click();
+//		  
+//	      Thread.sleep(1200);
+//	}
+
+  
 }

@@ -1,17 +1,18 @@
 package pages;
-
-
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+
 import java.time.Duration;
+import org.openqa.selenium.JavascriptExecutor;
+
 
 public class MyAptitudoPage {
     WebDriver driver;
@@ -21,8 +22,14 @@ public class MyAptitudoPage {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
+   
+   // For Page Down
+   public void scrollIntoView(WebElement element) {
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+	    js.executeScript("arguments[0].scrollIntoView(true);", element);
+	}
 // Name Aptitudo-Step-1
+   
    @FindBy(xpath  = "//input[@placeholder='Enter your APTITUDO name']")
    WebElement nameYourAptitudoField;
 
@@ -38,27 +45,6 @@ public class MyAptitudoPage {
    @FindBy(xpath= "//button[normalize-space()='Next Step']")
    WebElement nextStepButton;
    
-   // Actions
-   public void enteraptitudoName(String nameYourAptitud0) {
-	   nameYourAptitudoField.sendKeys(nameYourAptitud0);
-   }
-   
-   public void enterdepartment(String department) {
-	   departmentField.sendKeys(department);
-   }
-
-   public void enterjobTitle(String jobTitle) {
-	   jobTitleField.sendKeys(jobTitle);
-   }
-
-   public void enterjobTitleId(String jobTitleId) {
-	   jobTitleIdField.sendKeys(jobTitleId);
-   }
-   public void buttonClick() {
-	   nextStepButton.click();
-   }
-   
-
    public void nameAptitudo(String nameYourAptitud0, String department,String jobTitle, String jobTitleId ) throws InterruptedException {
 	   nameYourAptitudoField.sendKeys(nameYourAptitud0);
 	   departmentField.click();
@@ -72,22 +58,17 @@ public class MyAptitudoPage {
 	   nextStepButton.click();
    }
    
-   //Job description
+   //Job description-Step-2
    
    @FindBy(xpath  = "//textarea[@placeholder='Enter your job description']")
    WebElement jobDescriptionField;
    
-   public void enterjobdescription(String descrription) {
-	   jobDescriptionField.sendKeys(descrription);
-   }
-   
- 
    public void jobDescription(String description) {
 	   jobDescriptionField.sendKeys(description);
 	   nextStepButton.click();
    }
    
-   // Select Test
+   // Select Test-Step-3
    
    @FindBy(xpath  = "//body/div/div/div/div/div/div/div/div/div/div/div[1]/div[1]/select[1]")
    WebElement testTypeField;
@@ -104,42 +85,38 @@ public class MyAptitudoPage {
    @FindBy(xpath = "(//select)[3]")
    WebElement subIndustryField;
    
-   @FindBy(xpath = "//span[@class='multiselect__placeholder']")
+   @FindBy(xpath = "//div[@class='multiselect__tags']")
    WebElement aptitudoTestTypeField;
    
   @FindBy(xpath= "//button[normalize-space()='Submit']")
   WebElement submitButtonclick;
- 
-// Actions
-   public void enterTestType(String testType) {
-	   testTypeField.sendKeys(testType);
-   }
-   
-   public void enternoOfQuestion(String noOfQuestion) {
-	   questionNoField.sendKeys(noOfQuestion);
-   }
+  
+  // Select All Question
+  @FindBy(xpath= "//label[normalize-space()='Select All']")
+  WebElement selectAllButtonclick;
+  
+  @FindBy(xpath= "//button[@class='btn-capsule bg-primary']")
+  WebElement submitQuestionButtonclick;
+  
+  // Enter the name of the test!
 
-   public void enterduration(String setDuration) {
-	   durationField.sendKeys(setDuration);
-   }
-
-   public void enterIndustry(String industry) {
-	   industryField.sendKeys(industry);
-   }
-   
-   public void enterSubIndustry(String subIndustry) {
-	   subIndustryField.sendKeys(subIndustry);
-   }
-
-   public void enterAptitudoTest(String aptitudoTestType) {
-	   aptitudoTestTypeField.sendKeys(aptitudoTestType);
-   }
-   
-   public void submitButton() {
-	   submitButtonclick.click();
-   }
-   
-   public void selecttest(String testType, String noOfQuestion, String setDuration, String industry, String subIndustry, String aptitudoTestType ) throws InterruptedException {
+	@FindBy(xpath= "//input[@placeholder='Test Name']")
+	WebElement testNameField;
+// save button from Enter Test name
+	@FindBy(xpath = "//button[normalize-space()='Save']") 
+	WebElement saveTestNameButton;
+	
+	//For Code
+	@FindBy(xpath = "//select[@class='w-full text-gray-900 bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 p-2.5 text-sm border border-gray-300 rounded-lg']")
+    WebElement selectProgrammingLang;
+	
+	@FindBy(xpath= "//body[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[3]/div[2]/div[1]/div[8]/div[2]/div[1]/div[1]/input[1]")
+	WebElement enterPassedtestcase;
+	
+	@FindBy(xpath = "//body[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[3]/div[1]/div[3]/div[2]/div[1]/div[8]/div[3]/div[1]/div[1]/input[1]")
+    WebElement enterexecutionTine;
+	
+   public void selecttest(String testType, String noOfQuestion, String setDuration, String industry, String subIndustry, String aptitudoTestType, String testName ) throws InterruptedException {
 	   testTypeField.click();
 	   testTypeField.sendKeys(testType);
 	   questionNoField.sendKeys(noOfQuestion);
@@ -156,20 +133,89 @@ public class MyAptitudoPage {
 	   subIndustryField.sendKeys(subIndustry);
 	   subIndustryField.sendKeys(Keys.ENTER);
 	   Thread.sleep(3000);
-		  /* aptitudoTestTypeField.click();
-		   Thread.sleep(3000);
-		   aptitudoTestTypeField.sendKeys(aptitudoTestType);
-		   Thread.sleep(3000);
-		   aptitudoTestTypeField.sendKeys(Keys.ENTER);
-		   Thread.sleep(3000);
-		   */
+	
 	   WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	   wait.until(ExpectedConditions.elementToBeClickable(aptitudoTestTypeField)).click();
-	    aptitudoTestTypeField.sendKeys(aptitudoTestType);
-	    aptitudoTestTypeField.sendKeys(Keys.ENTER);
+	   
+	   WebElement optionToSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		        By.xpath("//span[contains(text(),'" + aptitudoTestType + "')]")
+		    ));
+		    optionToSelect.click();
+	   
 	    submitButtonclick.click();
+	    Thread.sleep(3000);
+	    
+	    
+	    // Select All Questions
+	    selectAllButtonclick.click();
+	    Thread.sleep(1200);
+	    scrollIntoView(submitQuestionButtonclick);
+	    submitQuestionButtonclick.click();
+	    
+	    testNameField.sendKeys(testName);
+	    saveTestNameButton.click();
+	    //nextStepButton.click();
+	    Thread.sleep(1200);
+	    
+	    
    }
    
    
+   
+   
+   public void selecttestCode(String testType, String noOfQuestion, String setDuration, String industry, String subIndustry, String aptitudoTestType, String testName, String programminglang, String passedTestCase, String executionTime ) throws InterruptedException {
+	   testTypeField.click();
+	   testTypeField.sendKeys(testType);
+	   questionNoField.sendKeys(noOfQuestion);
+	   Thread.sleep(3000);
+	   durationField.click();
+	   durationField.clear();
+	   durationField.sendKeys(setDuration);
+	   Thread.sleep(3000);
+	   industryField.click();
+	   industryField.sendKeys(industry);
+	   industryField.sendKeys(Keys.ENTER);
+	   Thread.sleep(3000);
+	   subIndustryField.click();
+	   subIndustryField.sendKeys(subIndustry);
+	   subIndustryField.sendKeys(Keys.ENTER);
+	   Thread.sleep(3000);
+	
+	   WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	   wait.until(ExpectedConditions.elementToBeClickable(aptitudoTestTypeField)).click();
+	   
+	   WebElement optionToSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		        By.xpath("//span[contains(text(),'" + aptitudoTestType + "')]")
+		    ));
+		    optionToSelect.click();
+	    selectProgrammingLang.click();
+	    selectProgrammingLang.sendKeys(programminglang);
+	    selectProgrammingLang.sendKeys(Keys.ENTER);
+		Thread.sleep(3000);
+		enterPassedtestcase.click();
+		enterPassedtestcase.sendKeys(passedTestCase);     
+		enterexecutionTine.click();
+		enterexecutionTine.sendKeys(executionTime);  
+		    
+	   
+	    submitButtonclick.click();
+	    Thread.sleep(3000);
+	    
+	    
+	    // Select All Questions
+	    selectAllButtonclick.click();
+	    Thread.sleep(1200);
+	    scrollIntoView(submitQuestionButtonclick);
+	    submitQuestionButtonclick.click();
+	    
+	    testNameField.sendKeys(testName);
+	    saveTestNameButton.click();
+	    nextStepButton.click();
+	    Thread.sleep(1200);
+	    
+	    
+   }
+
+
    
 }
