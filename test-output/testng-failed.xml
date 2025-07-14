@@ -5,10 +5,14 @@
     <classes>
       <class name="tests.AptitudoTest">
         <methods>
-          <include name="selecttest"/>
+          <include name="customQuestionMcq"/>
+          <include name="customQuestionEssay"/>
+          <include name="customQuestionFileUpload"/>
           <include name="tearDown"/>
           <include name="setUp"/>
-          <include name="testCodeCardExists"/>
+          <include name="customQuestionCode"/>
+          <include name="customQuestionVideo"/>
+          <include name="customQuestionSQ"/>
         </methods>
       </class> <!-- tests.AptitudoTest -->
     </classes>
