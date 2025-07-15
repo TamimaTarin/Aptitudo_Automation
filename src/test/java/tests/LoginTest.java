@@ -43,7 +43,8 @@ public class LoginTest extends baseTest {
     
         String currentUrl = driver.getCurrentUrl();
         System.out.println("Current URL: " + currentUrl);
-
+        
+        System.out.println("Train login test");
        
         Assert.assertEquals(currentUrl, "https://dev.cnsbd.com:2022/dashboard", "Unexpected URL after login");
         

@@ -9,22 +9,14 @@ import pages.MyAptitudoPage;
 import utility.utils;
 
 public class AptitudoTest extends LoginTest{
-    By myAptitudoMenu = By.xpath("//a[normalize-space()='My APTITUDO']");
-    //By selectLibrary= By.xpath("//button[normalize-space()='Select Tests From Test Library']");
-    
-    
-    By selectMcq=By.xpath("(//div[@class='containerClass shadow-1'])[2]");
-    By selectFileUpload=By.xpath("(//div[@class='containerClass shadow-1'])[3]");
-    By selectVideo=By.xpath("(//div[@class='containerClass shadow-1'])[4]");
-    By selectEssay=By.xpath("(//div[@class='containerClass shadow-1'])[5]");
-    By selectSQ=By.xpath("(//div[@class='containerClass shadow-1'])[6]");
     
     @Test(priority = 1)
 
     public void goToMyAptitudo() throws InterruptedException {
-        driver.findElement(myAptitudoMenu).click();
-        //System.out.println("tarin");
-        Thread.sleep(1200);
+    	
+      WebElement myAptitudoMenu= driver.findElement(By.xpath("//a[normalize-space()='My APTITUDO']"));
+      myAptitudoMenu.click();
+  	  Thread.sleep(1200);
     }
     @Test(priority = 2)
 	
@@ -95,13 +87,10 @@ public class AptitudoTest extends LoginTest{
             // Handle MCQ, Essay, Case Study
             aiSelectTest.selecttest(testType, noOfQuestion, setDuration,industry, subIndustry, aptitudoTestType, testName);
         }
-    	
-    	
-        // Thread.sleep(3000);
 	}
   }
   @Test(priority = 5)
-  public void customQuestionCode() throws InterruptedException {
+    public void customQuestionCode() throws InterruptedException {
 	  
 	  WebElement selectCode= driver.findElement(By.xpath("(//div[@class='containerClass shadow-1'])[1]"));
 	   selectCode.click();
@@ -134,46 +123,116 @@ public class AptitudoTest extends LoginTest{
 			  constraints2, constraints3, example1In, example1Out, example1Exaplanation,
 			  example2In, example2Out, example2Exaplanation, passedTestScore);
       Thread.sleep(3000);
-      System.out.println("birokto ami ey testng niye");
+     // System.out.println("birokto ami ey testng niye");
 	
 }
   @Test(priority =6)
- public void customQuestionMcq() throws InterruptedException {
+    public void customQuestionMcq() throws InterruptedException {
+	  WebElement selectMcq= driver.findElement(By.xpath("(//div[@class='containerClass shadow-1'])[2]"));
+	  selectMcq.click();
+	   Thread.sleep(1200);
+	  for (int i = 5; i < 10; i++) {
+	    	String questionTitle = utils.getCellData("Sheet2", i,0);
+	    	String settime = utils.getCellData("Sheet2", i,1);
+	    	String question = utils.getCellData("Sheet2", i, 2);
+	    	String option1 = utils.getCellData("Sheet2",i,3);
+	    	String option2 = utils.getCellData("Sheet2",i,4);
+	    	String option3 = utils.getCellData("Sheet2",i,5);	
+	    	String option4= utils.getCellData("Sheet2", i, 6);
+	    	
+	    	
+	    	if (questionTitle == null || settime == null || question == null ||option1 == null || option2 == null ||option3 == null || option4==null) {
+	            throw new IllegalArgumentException("Test data missing for Custom Question-MCQ");
+	        }
 	  
-	  driver.findElement(selectMcq).click();
-	  Thread.sleep(1200);  
-	
-	
+	    	 MyAptitudoPage custommcq = new MyAptitudoPage(driver);
+	    	 custommcq.mcqCustomQuestion(questionTitle,settime, question, option1, option2,option3, option4);
+	         Thread.sleep(3000);	
 }
+  }
   @Test(priority =7)
  public void customQuestionFileUpload() throws InterruptedException {
+	  WebElement selectFileUpload= driver.findElement(By.xpath("(//div[@class='containerClass shadow-1'])[3]"));
+	  selectFileUpload.click();
+	   Thread.sleep(1200);
+	   
+	  String questionTitle= utils.getCellData("Shett2", 11, 0);
+	  String question=utils.getCellData("Sheet2", 11, 1);
 	  
-	  driver.findElement(selectFileUpload).click();
-	  Thread.sleep(1200);  
+	  if (questionTitle == null || question == null) {
+          throw new IllegalArgumentException("Test data missing for Custom Question-File Upload");
+      }
+	  
+	  MyAptitudoPage customFile = new MyAptitudoPage(driver);
+	  customFile.fileUploadCustomQuestion(questionTitle,question);
+      Thread.sleep(3000);
 	
 }
   @Test(priority =8)
  public void customQuestionVideo() throws InterruptedException {
+	  WebElement selectVideo= driver.findElement(By.xpath("(//div[@class='containerClass shadow-1'])[4]"));
+	  selectVideo.click();
+	   Thread.sleep(1200);
+	   String questionTitle = utils.getCellData("Sheet2", 12,0);
+   	   String maxLength = utils.getCellData("Sheet2", 12,1);
+   	   String question = utils.getCellData("Sheet2", 12, 2);
+   	   
+   	   
+   	 if (questionTitle == null || maxLength == null || question == null) {
+         throw new IllegalArgumentException("Test data missing for Custom Question-Video");
+     }
 	  
-	  driver.findElement(selectVideo).click();
-	  Thread.sleep(1200);  
-	
+	  MyAptitudoPage customVideo = new MyAptitudoPage(driver);
+	  customVideo.videoCustomQuestion(questionTitle,maxLength,question);
+     Thread.sleep(3000);
 	
 }
   @Test(priority =9)
  public void customQuestionEssay() throws InterruptedException {
+	  WebElement selectEssay= driver.findElement(By.xpath("(//div[@class='containerClass shadow-1'])[5]]"));
+	  selectEssay.click();
+	   Thread.sleep(1200);
+	   
+	   String questionTitle = utils.getCellData("Sheet2", 13,0);
+   	   String maxWord = utils.getCellData("Sheet2", 13,1);
+   	   String setTime = utils.getCellData("Sheet2", 13,2);
+   	   String question = utils.getCellData("Sheet2", 13, 3);
+   	   
+   	   
+   	 if (questionTitle == null || maxWord == null || setTime == null || question == null) {
+         throw new IllegalArgumentException("Test data missing for Custom Question-Essay");
+     }
 	  
-	  driver.findElement(selectEssay).click();
-	  Thread.sleep(1200); 
+	  MyAptitudoPage customEssay = new MyAptitudoPage(driver);
+	  customEssay.essayCustomQuestion(questionTitle,maxWord,setTime,question);
+     Thread.sleep(3000);
+	   
+	   
+	
 	
 	
 }
   @Test(priority =10)
  public void customQuestionSQ() throws InterruptedException {
 	  
-	  driver.findElement(selectSQ).click();
-	  Thread.sleep(1200);  
-	 
+	  WebElement selectSQ= driver.findElement(By.xpath("(//div[@class='containerClass shadow-1'])[6]"));
+	  selectSQ.click();
+	   Thread.sleep(1200);
+	   
+	   String questionTitle = utils.getCellData("Sheet2", 13,0);
+   	   String maxWord = utils.getCellData("Sheet2", 13,1);
+   	   String setTime = utils.getCellData("Sheet2", 13,2);
+   	   String question = utils.getCellData("Sheet2", 13, 3);
+   	   
+   	   
+   	 if (questionTitle == null || maxWord == null || setTime == null || question == null) {
+         throw new IllegalArgumentException("Test data missing for Custom Question-Essay");
+     }
+	  
+	  MyAptitudoPage customSQ = new MyAptitudoPage(driver);
+	  customSQ.SQCustomQuestion(questionTitle,maxWord,setTime,question);
+     Thread.sleep(3000);
+	   
 	
 }
 
