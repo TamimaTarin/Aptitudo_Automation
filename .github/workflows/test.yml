@@ -18,10 +18,10 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'     # ✅ This line was missing in your file
+          java-version: '17'
 
       - name: Set up Maven
-        run: sudo apt install -y maven
+        run: sudo apt-get update && sudo apt-get install -y maven
 
       - name: Run Tests
         run: mvn clean test
